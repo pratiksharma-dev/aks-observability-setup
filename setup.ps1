@@ -1,7 +1,7 @@
 # Define variables
-export MY_RESOURCE_GROUP_NAME="aks-observ-rg"
-export REGION="eastus2"
-export MY_AKS_CLUSTER_NAME="aksobserve"
+export MY_RESOURCE_GROUP_NAME="<your resource group name>" 
+export REGION="<region where you would like to deploy the cluster>" 
+export MY_AKS_CLUSTER_NAME="<AKS cluster name>" 
 
 
 # Create a resource group
@@ -49,12 +49,12 @@ EOF
 kubectl get peerauthentication -n default
 
 # Create azure monitor resource (managed prometheus resource)
-export AZURE_MONITOR_NAME="aksobserveworkspace"
-az resource create --resource-group $MY_RESOURCE_GROUP_NAME --namespace microsoft.monitor --resource-type accounts --name $AZURE_MONITOR_NAME --location $REGION --properties '{}'
+export AZURE_MONITOR_NAME="<your desired name for managed prometheus resource>" 
+az resource create --resource-group $MY_RESOURCE_GROUP_NAME --namespace microsoft.monitor --resource-type accounts --name $AZURE_MONITOR_NAME --location $REGION --properties '{}' 
 
-# Create Azure Managed Grafana instance
-export GRAFANA_NAME="aksobservegrafana"
-az grafana create --name $GRAFANA_NAME --resource-group $MY_RESOURCE_GROUP_NAME --location $REGION
+# Create Azure Managed Grafana instance 
+export GRAFANA_NAME="<your desired name for managed grafana resource>" 
+az grafana create --name $GRAFANA_NAME --resource-group $MY_RESOURCE_GROUP_NAME --location $REGION 
 
 # Link Azure Monitor and Azure Managed Grafana to the AKS cluster
 grafanaId=$(az grafana show --name $GRAFANA_NAME --resource-group $MY_RESOURCE_GROUP_NAME --query id --output tsv)
