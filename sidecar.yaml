@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Sidecar
+metadata:
+  name: ingress
+  namespace: ingress-basic
+spec:
+  egress:
+  - hosts:
+    # only the productpage service in the default namespace
+    - "default/productpage.default.svc.cluster.local"
+    # any service in the default namespace
+    - "default/*"
+    # tripping hazard: make sure you include aks-istio-system!
+    - "aks-istio-system/*"
+    # in case you want to allow traffic to all namespaces and services use below (above entries not needed in that case)
+    # - "*/*"
